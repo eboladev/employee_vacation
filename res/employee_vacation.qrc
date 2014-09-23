@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/image">
+        <file>images/32x32/app_icon.png</file>
+        <file>images/32x32/application-exit.png</file>
+        <file>images/32x32/edit-clear.png</file>
+        <file>images/32x32/edit-find.png</file>
+        <file>images/32x32/media-floppy.png</file>
+        <file>images/32x32/package_editors.png</file>
+        <file>images/32x32/trash-empty.png</file>
+        <file>images/32x32/mail-mark-unread-new.png</file>
+        <file>images/32x32/printer_color.png</file>
+        <file>images/32x32/list-add.png</file>
+        <file>images/32x32/list-remove.png</file>
+        <file>images/32x32/contact-new.png</file>
+        <file>images/32x32/view-calendar-upcoming-days.png</file>
+        <file>images/32x32/resource-calendar-child.png</file>
+    </qresource>
+    <qresource prefix="/text">
+        <file>text/VERSION</file>
+    </qresource>
+</RCC>
