@@ -53,7 +53,7 @@ namespace employee_vacation
     /// ------------------------------------------------------------------------
         void initialize( );
         void init_layout( );
-        void init_connections( );
+        void init_signal_connections( );
         int  min_column_width( ) const;
         int  min_row_height( ) const;
         int  correct_columns_width( );

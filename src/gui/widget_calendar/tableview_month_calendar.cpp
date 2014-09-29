@@ -84,7 +84,7 @@ namespace employee_vacation
     {
         this->init_layout( );
 
-        this->init_connections( );
+        this->init_signal_connections( );
     }
 
     /// ------------------------------------------------------------------------
@@ -106,7 +106,7 @@ namespace employee_vacation
     /// ------------------------------------------------------------------------
     /// init_connections( )
     /// ------------------------------------------------------------------------
-    void tableview_month_calendar::init_connections( )
+    void tableview_month_calendar::init_signal_connections( )
     {
         if( this->selectionModel( ) )
         {
