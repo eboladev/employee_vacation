@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 11-10-2013
-///		Date update	: 14-10-2013
+///		Date update	: 01-10-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __WIDGET_EMPLOYEE_H__
@@ -18,6 +18,7 @@ namespace employee_vacation
 {
 
 class listview_employee;
+class data_employee;
 
 /// ############################################################################
 ///			class widget_employee
@@ -79,6 +80,8 @@ class listview_employee;
         void slot_edit_employee( );
         /// --------------------------------------------------------------------
         void slot_del_employee( );
+        /// --------------------------------------------------------------------
+        void slot_view_employee_calendar(const data_employee *);
 
     /// ========================================================================
     ///			FIELDS

@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 11-10-2013
-///		Date update	: 15-10-2013
+///		Date update	: 01-10-2014
 ///		Comment		:
 /// ============================================================================
 #include <QLabel>
@@ -105,13 +105,11 @@ namespace employee_vacation
                     this->_btn_del_employee, SIGNAL( clicked( ) ),
                     this, SLOT( slot_del_employee( ) )
                     );
-        /*
-        //_lv_request
+        //_lv_employee
         this->connect(
-                     this->_lv_employee, SIGNAL(current_request_changed(const data_request*)),
-                     this->_w_view, SLOT(change_view(const data_request*))
+                     this->_lv_employee, SIGNAL(current_item_changed(const data_employee*)),
+                     this, SLOT(slot_view_employee_calendar(const data_employee*))
                      );
-                     */
     }
 
     /// ------------------------------------------------------------------------
@@ -241,6 +239,21 @@ namespace employee_vacation
             }
         }
 
+    }
+
+    /// ------------------------------------------------------------------------
+    /// slot_view_employee_calendar( )
+    /// ------------------------------------------------------------------------
+    void widget_employee::slot_view_employee_calendar( const data_employee *employee )
+    {
+        if( employee == 0 )
+        {
+            return;
+        }
+        QMessageBox::information(
+                                 0, tr("info"),
+                                 employee->to_string( )
+                                );
     }
 
 }//    namespace employee_vacation

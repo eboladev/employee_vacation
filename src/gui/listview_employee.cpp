@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 10-10-2013
-///		Date update	: 14-10-2013
+///		Date update	: 01-10-2014
 ///		Comment		:
 /// ============================================================================
 #include <QAbstractItemView>
@@ -125,7 +125,7 @@ namespace employee_vacation
     void listview_employee::selected_item_changed( )
     {
         const data_employee *employee = this->current_employee( );
-        if( employee )
+        if( employee != 0 )
         {
             emit current_item_changed( employee );
         }
