@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 15-10-2013
-///		Date update	: 15-10-2013
+///		Date update	: 02-10-2014
 ///		Comment		:
 /// ============================================================================
 
@@ -12,6 +12,8 @@
 
 #include "widget_employee_vacation.h"
 #include "widget_year_calendar.h"
+
+#include "data_adapter_employee.h"
 
 namespace rele_auto
 {
@@ -126,6 +128,7 @@ namespace employee_vacation
 
         return w;
     }
+
     /*
     /// ------------------------------------------------------------------------
     /// init_context_menu( )
@@ -150,6 +153,20 @@ namespace employee_vacation
                        );
     }
 */
+    /// ------------------------------------------------------------------------
+    /// slot_set_employee(const data_employee *)
+    /// ------------------------------------------------------------------------
+    void widget_employee_vacation::refresh_calendar( )
+    {
+        if( this->_employee == 0 )
+        {
+            return;
+        }
+        QMessageBox::information(
+                                 0, tr("info"),
+                                 this->_employee->to_string( )
+                                );
+    }
     /// ========================================================================
     ///		EVENTS
     /// ========================================================================
@@ -157,6 +174,14 @@ namespace employee_vacation
     /// ========================================================================
     ///		SLOTS
     /// ========================================================================
+    /// ------------------------------------------------------------------------
+    /// slot_set_employee(const data_employee *)
+    /// ------------------------------------------------------------------------
+    void widget_employee_vacation::slot_set_employee( const data_employee *employee )
+    {
+        this->_employee = const_cast<data_employee *>( employee );
+        this->refresh_calendar( );
+    }
 
 /// ############################################################################
 

@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 10-10-2013
-///		Date update	: 15-10-2013
+///		Date update	: 02-10-2014
 ///		Comment		:
 /// ============================================================================
 #include <QLabel>
@@ -85,6 +85,12 @@ namespace employee_vacation
     /// ------------------------------------------------------------------------
     void widget_central::init_connections( )
     {
+        //employee selection in employees list
+        //will be calendar update for show current employee vacations
+        this->connect(
+            this->_w_employee, SIGNAL(employee_selected(const data_employee*)),
+            this->_w_calendar, SLOT(slot_set_employee(const data_employee*))
+                     );
     }
 
     /// ------------------------------------------------------------------------
@@ -170,6 +176,22 @@ namespace employee_vacation
         }
 
     }
+
+    /// ------------------------------------------------------------------------
+    /// slot_view_employee_calendar( )
+    /// ------------------------------------------------------------------------
+    void widget_employee::slot_employee_selected( const data_employee *employee )
+    {
+        if( employee == 0 )
+        {
+            return;
+        }
+        QMessageBox::information(
+                                 0, tr("info"),
+                                 employee->to_string( )
+                                );
+    }
+
 */
 }//    namespace employee_vacation
 
