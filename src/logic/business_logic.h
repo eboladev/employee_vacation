@@ -1,7 +1,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 10-10-2013
-///		Date update	: 05-11-2013
+///		Date update	: 02-12-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __BUSINESS_LOGIC_H__
@@ -17,6 +17,9 @@ namespace employee_vacation
 
 class data_model_employee;
 class data_employee;
+class data_vacation_period;
+class data_vacation_period_collection;
+
 class application;
 /// ############################################################################
 ///			class business_logic
@@ -78,6 +81,9 @@ class application;
         bool employee_update(const data_employee &employee);
     /// ------------------------------------------------------------------------
         bool employee_delete(const int id_employee);
+    /// ------------------------------------------------------------------------
+        data_vacation_period_collection *vacation_period_select(int id_employee, int n_year);
+
 	/// ========================================================================
 	///		PROPERTIES
 	/// ========================================================================

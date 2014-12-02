@@ -1,7 +1,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 10-10-2013
-///		Date update	: 06-11-2013
+///		Date update	: 02-12-2014
 ///		Comment		:
 /// ============================================================================
 #include <QDebug>
@@ -14,6 +14,7 @@
 #include "data_model_employee.h"
 
 #include "data_adapter_employee.h"
+#include "data_adapter_vacation_period.h"
 
 namespace rele_auto
 {
@@ -101,6 +102,11 @@ namespace employee_vacation
         this->_model_employee = new data_model_employee;
         this->employee_select( );
     }
+///|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+///
+/// BLOCK employee
+///
+///|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
     /// ------------------------------------------------------------------------
 	///	employee_select( )
     /// ------------------------------------------------------------------------
@@ -283,11 +289,60 @@ namespace employee_vacation
 
        return true;
    }
+///|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+///
+/// BLOCK vacation
+///
+///|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+    /// ------------------------------------------------------------------------
+	///	vacation_period_select( )
+    /// ------------------------------------------------------------------------
+    data_vacation_period_collection*
+                       business_logic::vacation_period_select( int id_employee, int n_year )
+    {
+        qDebug( ) << "vacation_period_select in thread ID: " << this->thread( )->objectName( );
+        if( !this->_db_path.length( ) )
+        {
+            return 0;
+        }
+        data_vacation_period_collection *p_coll = 0;
+        try
+		{
+            data_adapter_vacation_period ap_vp;
+			//select data
+			p_coll = ap_vp.select( id_employee, n_year );
+		}
+		catch( std::exception &ex )
+		{
+            if( p_coll )
+            {
+                delete p_coll;
+                p_coll = 0;
+            }
+			QString s_msg(
+							"business_logic::vacation_period_select( )"
+							":\n\t" + QString::fromUtf8( ex.what( ) )
+						 );
+			qDebug( ) << s_msg;
+			QMessageBox::critical( 0, QObject::tr( "critical" ), s_msg );
+		}
+		catch( ... )
+		{
+            if( p_coll )
+            {
+                delete p_coll;
+                p_coll = 0;
+            }
+			QString s_msg(
+						"business_logic::vacation_period_select( )"
+						":\n\t unknown error while employees select"
+						 );
+			qDebug( ) << s_msg;
+			QMessageBox::critical( 0, QObject::tr( "critical" ), s_msg );
+		}
 
-    /// ========================================================================
-	///		SLOTS
-    /// ========================================================================
-
+		return p_coll;
+    }
 /// ############################################################################
 
 }//   namespace employee_vacation

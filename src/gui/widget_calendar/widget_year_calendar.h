@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 17-04-2013
-///		Date update	: 11-10-2013
+///		Date update	: 02-12-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __WIDGET_YEAR_CALENDAR_H__
@@ -58,6 +58,13 @@ typedef QVector<tableview_month_calendar*> vector_calendars;
                 return 0;
             }
             return this->_calendars[n_month - 1];
+        }
+
+        /// --------------------------------------------------------------------
+        /// year
+        int year( ) const
+        {
+            return this->_yearbox->value( );
         }
 
     /// ========================================================================

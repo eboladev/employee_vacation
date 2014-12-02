@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 15-10-2013
-///		Date update	: 02-10-2014
+///		Date update	: 02-12-2014
 ///		Comment		:
 /// ============================================================================
 
@@ -14,6 +14,10 @@
 #include "widget_year_calendar.h"
 
 #include "data_adapter_employee.h"
+#include "data_adapter_vacation_period.h"
+
+#include "business_logic.h"
+#include "application.h"
 
 namespace rele_auto
 {
@@ -158,14 +162,29 @@ namespace employee_vacation
     /// ------------------------------------------------------------------------
     void widget_employee_vacation::refresh_calendar( )
     {
+        //empty calendar vacation periods
+        //check employee
         if( this->_employee == 0 )
         {
             return;
         }
+        /*
         QMessageBox::information(
                                  0, tr("info"),
                                  this->_employee->to_string( )
                                 );
+                                */
+        //get vacation periods data
+        business_logic &logic = application::program_instance( )->the_business_logic( );
+        data_vacation_period_collection *p_coll = 0;
+        p_coll = logic.vacation_period_select(
+                                            this->_employee->id_employee( ),
+                                            this->_w_calendar->year( )
+                                             );
+        //paint vacation days
+
+        //remove collection pointer
+        delete p_coll;
     }
     /// ========================================================================
     ///		EVENTS
