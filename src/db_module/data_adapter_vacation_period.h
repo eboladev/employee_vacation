@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 15-10-2013
-///		Date update	: 15-10-2013
+///		Date update	: 03-12-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __DATA_ADAPTER_VACATION_PERIOD_H__
@@ -196,6 +196,8 @@ namespace employee_vacation
         data_vacation_period_collection( const data_vacation_period_collection &rhs );
 
 	public:
+        typedef QList<data_vacation_period *>::iterator iterator;
+        typedef QList<data_vacation_period *> data_vacation_period_list;
     /// ------------------------------------------------------------------------
         data_vacation_period_collection( ) :
 			_data( 0 )
@@ -263,7 +265,19 @@ namespace employee_vacation
 		}
 
     /// ------------------------------------------------------------------------
-        QList<data_vacation_period *>* list( )
+        iterator begin( )
+        {
+            return this->_data->begin( );
+        }
+
+    /// ------------------------------------------------------------------------
+        iterator end( )
+        {
+            return this->_data->end( );
+        }
+
+    /// ------------------------------------------------------------------------
+        data_vacation_period_list* list( )
 		{ return this->_data; }
 
 	/// ========================================================================
@@ -277,7 +291,7 @@ namespace employee_vacation
 	///			FIELDS
 	/// ========================================================================
 	private:
-        QList<data_vacation_period *>	*_data;
+        data_vacation_period_list	*_data;
 
     };//class data_vacation_period_collection
 /// ############################################################################
