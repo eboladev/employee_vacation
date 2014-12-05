@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 17-04-2013
-///		Date update	: 14-10-2013
+///		Date update	: 05-12-2014
 ///		Comment		:
 /// ============================================================================
 
@@ -220,6 +220,31 @@ namespace employee_vacation
     {
         this->init_layout( );
         this->init_connections( );
+    }
+    /// ------------------------------------------------------------------------
+    /// set_vacation( const QDate &dt_begin, const QDate &dt_end )
+    /// ------------------------------------------------------------------------
+    void widget_year_calendar::set_vacation( const QDate &dt_begin, const QDate &dt_end )
+    {
+        int n_calendar_index = dt_begin.month( ) - 1;
+        tableview_month_calendar *p_calendar = this->_calendars[n_calendar_index];
+        p_calendar->set_vacation( dt_begin, dt_end );
+        p_calendar->repaint( );
+
+        this->repaint( );
+    }
+
+    /// ------------------------------------------------------------------------
+    /// unset_vacation( const QDate &dt_begin, const QDate &dt_end )
+    /// ------------------------------------------------------------------------
+    void widget_year_calendar::unset_vacation( const QDate &dt_begin, const QDate &dt_end )
+    {
+        int n_calendar_index = dt_begin.month( ) - 1;
+        tableview_month_calendar *p_calendar = this->_calendars[n_calendar_index];
+        p_calendar->unset_vacation( dt_begin, dt_end );
+        p_calendar->repaint( );
+
+        this->repaint( );
     }
 
     /// ========================================================================

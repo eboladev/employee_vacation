@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 17-04-2013
-///		Date update	: 02-12-2014
+///		Date update	: 05-12-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __WIDGET_YEAR_CALENDAR_H__
@@ -82,6 +82,12 @@ typedef QVector<tableview_month_calendar*> vector_calendars;
         /// --------------------------------------------------------------------
         tableview_month_calendar*
             init_month_calendar( int year, calendar_data::month_type month );
+
+    public:
+        /// ------------------------------------------------------------------------
+        void set_vacation( const QDate &dt_begin, const QDate &dt_end );
+        /// ------------------------------------------------------------------------
+        void unset_vacation( const QDate &dt_begin, const QDate &dt_end );
 
     /// ========================================================================
     ///		PROPERTIES

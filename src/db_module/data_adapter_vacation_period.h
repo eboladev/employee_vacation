@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 15-10-2013
-///		Date update	: 03-12-2014
+///		Date update	: 05-12-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __DATA_ADAPTER_VACATION_PERIOD_H__
@@ -70,7 +70,7 @@ namespace employee_vacation
             _x_dt_begin = row[num_field_dtfrom].toString( );
 
             if( i_fields_num < num_field_dtto ) return;
-            _x_dt_begin = row[num_field_dtto].toString( );
+            _x_dt_end = row[num_field_dtto].toString( );
         }
 
     /// ------------------------------------------------------------------------
@@ -88,7 +88,7 @@ namespace employee_vacation
             _x_dt_begin = (*p_row)[num_field_dtfrom].toString( );
 
             if( i_fields_num < num_field_dtto ) return;
-            _x_dt_begin = (*p_row)[num_field_dtto].toString( );
+            _x_dt_end = (*p_row)[num_field_dtto].toString( );
 		}
     /// ------------------------------------------------------------------------
         ~data_vacation_period( )

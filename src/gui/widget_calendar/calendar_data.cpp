@@ -17,6 +17,7 @@ namespace employee_vacation
 ///			class calendar_data
 /// ############################################################################
     const int calendar_data::DAYS_IN_WEEK = 7;
+    const int calendar_data::START_DAY_ROW = 2;
 
     /// ========================================================================
     ///		CONSTRUCTORS/DESTRUCTOR
@@ -126,14 +127,13 @@ namespace employee_vacation
     void calendar_data::init_day_items( )
     {
         int week_num = 0;
-        const int start_row = 2;
 
         unsigned int index = 0;
         QDate dt(this->_year, this->_month, 1);
         while( dt.month( )==this->_month )
         {
             int day = dt.dayOfWeek( );
-            index = hash_index( start_row+week_num, day - 1 );
+            index = hash_index( START_DAY_ROW+week_num, day - 1 );
 
             this->_items.insert(
                                  index,
@@ -200,7 +200,7 @@ namespace employee_vacation
         int cell_number = dt.day( ) + dt_month_start.dayOfWeek( ) - 1;
 
         //calculate row in calendar table
-        return cell_number / DAYS_IN_WEEK;
+        return (cell_number / DAYS_IN_WEEK) + START_DAY_ROW;
     }
 
     /// ------------------------------------------------------------------------

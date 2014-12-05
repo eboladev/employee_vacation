@@ -3,7 +3,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 29-01-2013
-///		Date update	: 23-10-2013
+///		Date update	: 05-12-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __EV_TABLEVIEW_MONTH_CALENDAR_H__
@@ -69,6 +69,10 @@ namespace employee_vacation
             this->_model->requery( );
             this->setModel( this->_model );
         }
+    /// ------------------------------------------------------------------------
+        void set_vacation( const QDate &dt_begin, const QDate &dt_end );
+    /// ------------------------------------------------------------------------
+        void unset_vacation( const QDate &dt_begin, const QDate &dt_end );
 
     /// ========================================================================
     ///		PROPERTIES

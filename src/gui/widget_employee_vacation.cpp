@@ -163,6 +163,8 @@ namespace employee_vacation
     void widget_employee_vacation::refresh_calendar( )
     {
         //empty calendar vacation periods
+        //!!!!!!!!!
+
         //check employee
         if( this->_employee == 0 )
         {
@@ -181,8 +183,20 @@ namespace employee_vacation
                                             this->_employee->id_employee( ),
                                             this->_w_calendar->year( )
                                              );
+        if( !p_coll || p_coll->size( ) < 1 )
+        {
+            return;
+        }
         //paint vacation days
-
+        data_vacation_period_collection::iterator it = p_coll->begin( );
+        for( ;it != p_coll->end( ); ++it )
+        {
+            data_vacation_period *period = *it;
+            if( period )
+            {
+                this->_w_calendar->set_vacation( period->date_begin( ), period->date_end( ) );
+            }
+        }
         //remove collection pointer
         delete p_coll;
     }

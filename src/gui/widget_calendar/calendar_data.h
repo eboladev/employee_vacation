@@ -122,6 +122,7 @@ namespace employee_vacation
     /// ========================================================================
     private:
         static const int DAYS_IN_WEEK;
+        static const int START_DAY_ROW;
 
         int _year;
         month_type _month;

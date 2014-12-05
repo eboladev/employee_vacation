@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 29-01-2013
-///		Date update	: 23-10-2013
+///		Date update	: 05-12-2014
 ///		Comment		:
 /// ============================================================================
 
@@ -46,6 +46,9 @@ namespace employee_vacation
         }
         catch( std::exception &ex )
         {
+            this->_model = 0;
+            this->setModel( 0 );
+
             QMessageBox::warning(
                                 0, QObject::tr( "Warning" ),
                                 QString::fromStdString( ex.what( ) )
@@ -193,6 +196,32 @@ namespace employee_vacation
                          this->correct_columns_width( ),
                          this->correct_rows_height( )
                         );
+        }
+    }
+
+    /// ------------------------------------------------------------------------
+    /// set_vacation( const QDate &dt_begin, const QDate &dt_end )
+    /// ------------------------------------------------------------------------
+    void tableview_month_calendar::set_vacation( const QDate &dt_begin, const QDate &dt_end )
+    {
+        QAbstractItemModel *model = this->model( );
+        if( model )
+        {
+            data_model_month *dmm = static_cast<data_model_month*>( model );
+            dmm->set_vacation_days( dt_begin, dt_end );
+        }
+    }
+
+    /// ------------------------------------------------------------------------
+    /// unset_vacation( const QDate &dt_begin, const QDate &dt_end )
+    /// ------------------------------------------------------------------------
+    void tableview_month_calendar::unset_vacation( const QDate &dt_begin, const QDate &dt_end )
+    {
+        QAbstractItemModel *model = this->model( );
+        if( model )
+        {
+            data_model_month *dmm = static_cast<data_model_month*>( model );
+            dmm->unset_vacation_days( dt_begin, dt_end );
         }
     }
 

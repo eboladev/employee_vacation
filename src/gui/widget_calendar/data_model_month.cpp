@@ -247,17 +247,12 @@ namespace employee_vacation
         }
         try
         {
-        /*
-            QModelIndexList::const_iterator it = list_indexes.begin();
-            for( ; it < list_indexes.end( ); ++it )
+            QDate dt( dt_begin );
+            while( dt <= dt_end )
             {
-                const QModelIndex &idx = *it;
-                if( idx.isValid( ) )
-                {
-                    this->_data->set_vacation( idx.row( ), idx.column( ) );
-                }
+                this->_data->set_vacation( dt );
+                dt = dt.addDays( 1 );
             }
-            */
         }
         catch( std::exception &ex )
         {
@@ -271,7 +266,24 @@ namespace employee_vacation
     /// ------------------------------------------------------------------------
     void data_model_month::unset_vacation_days( const QDate &dt_begin, const QDate &dt_end )
     {
-
+        if( !this->_data )
+        {
+            return;
+        }
+        try
+        {
+            QDate dt( dt_begin );
+            while( dt <= dt_end )
+            {
+                this->_data->unset_vacation( dt );
+                dt.addDays( 1 );
+            }
+        }
+        catch( std::exception &ex )
+        {
+            qDebug( ) << "data_model_month::set_vacation_days\t"
+                   << QString::fromStdString( ex.what( ) );
+        }
     }
 
 /// ############################################################################
