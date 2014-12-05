@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 29-01-2013
-///		Date update	: 11-10-2013
+///		Date update	: 05-12-2014
 ///		Comment		:
 /// ============================================================================
 
@@ -114,6 +114,10 @@ namespace employee_vacation
         void set_vacation_days( const QModelIndexList &list_indexes );
     /// ------------------------------------------------------------------------
         void unset_vacation_days( const QModelIndexList &list_indexes );
+    /// ------------------------------------------------------------------------
+        void set_vacation_days( const QDate &dt_begin, const QDate &dt_end );
+    /// ------------------------------------------------------------------------
+        void unset_vacation_days( const QDate &dt_begin, const QDate &dt_end );
 
     /// ========================================================================
     ///		SLOTS

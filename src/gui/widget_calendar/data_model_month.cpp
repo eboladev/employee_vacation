@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 29-01-2013
-///		Date update	: 11-10-2013
+///		Date update	: 05-12-2014
 ///		Comment		:
 /// ============================================================================
 
@@ -234,6 +234,44 @@ namespace employee_vacation
             qDebug( ) << "data_model_month::set_vacation_days\t"
                    << QString::fromStdString( ex.what( ) );
         }
+    }
+
+    /// ------------------------------------------------------------------------
+    ///	set_vacation_days( const QDate &dt_begin, const QDate &dt_end )
+    /// ------------------------------------------------------------------------
+    void data_model_month::set_vacation_days( const QDate &dt_begin, const QDate &dt_end )
+    {
+        if( !this->_data )
+        {
+            return;
+        }
+        try
+        {
+        /*
+            QModelIndexList::const_iterator it = list_indexes.begin();
+            for( ; it < list_indexes.end( ); ++it )
+            {
+                const QModelIndex &idx = *it;
+                if( idx.isValid( ) )
+                {
+                    this->_data->set_vacation( idx.row( ), idx.column( ) );
+                }
+            }
+            */
+        }
+        catch( std::exception &ex )
+        {
+            qDebug( ) << "data_model_month::set_vacation_days\t"
+                   << QString::fromStdString( ex.what( ) );
+        }
+    }
+
+    /// ------------------------------------------------------------------------
+    ///	unset_vacation_days( const QDate &dt_begin, const QDate &dt_end )
+    /// ------------------------------------------------------------------------
+    void data_model_month::unset_vacation_days( const QDate &dt_begin, const QDate &dt_end )
+    {
+
     }
 
 /// ############################################################################

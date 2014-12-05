@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 18-03-2013
-///		Date update	: 16-04-2013
+///		Date update	: 05-12-2014
 ///		Comment		:
 /// ============================================================================
 
@@ -154,7 +154,7 @@ namespace employee_vacation
     }
 
     /// ------------------------------------------------------------------------
-    ///	hash_index( )
+    ///	hash_index( const int row, const int column)
     /// ------------------------------------------------------------------------
     unsigned int calendar_data::hash_index(
                                             const int row,
@@ -167,6 +167,52 @@ namespace employee_vacation
         index |= column;
 
         return index;
+    }
+
+    /// ------------------------------------------------------------------------
+    ///	hash_index( const QDate &dt )
+    /// ------------------------------------------------------------------------
+    unsigned int calendar_data::hash_index( const QDate &dt ) const
+    {
+        int n_row = this->calendar_row( dt );
+        int n_column = this->calendar_column( dt );
+
+        if( n_row == -1 )
+        {
+            return 0xFFFFFFFF;
+        }
+
+        return this->hash_index( n_row, n_column );
+    }
+
+    /// ------------------------------------------------------------------------
+    ///	calendar_row( const QDate &dt )
+    /// ------------------------------------------------------------------------
+    int calendar_data::calendar_row( const QDate &dt ) const
+    {
+        if( this->_month != dt.month( ) || this->_year != dt.year( ) )
+        {
+            return -1;
+        }
+        QDate dt_month_start( 1, dt.month( ), dt.year( ) );
+        //date cell number in one-dimension row starting with
+        //previous month last week Monday
+        int cell_number = dt.day( ) + dt_month_start.dayOfWeek( ) - 1;
+
+        //calculate row in calendar table
+        return cell_number / DAYS_IN_WEEK;
+    }
+
+    /// ------------------------------------------------------------------------
+    ///	calendar_column( const QDate &dt )
+    /// ------------------------------------------------------------------------
+    int calendar_data::calendar_column( const QDate &dt ) const
+    {
+        if( this->_month != dt.month( ) || this->_year != dt.year( ) )
+        {
+            return -1;
+        }
+        return dt.dayOfWeek( ) - 1;
     }
 
     /// ------------------------------------------------------------------------
@@ -243,6 +289,36 @@ namespace employee_vacation
         calendar_item *item = calendar_item_creator::create( old_item->date( ) );
         this->replace_item( item_index, item );
 
+    }
+
+    /// ------------------------------------------------------------------------
+    ///	set_vacation( const QDate &dt )
+    /// ------------------------------------------------------------------------
+    void calendar_data::set_vacation( const QDate &dt )
+    {
+        int calendar_row = this->calendar_row( dt );
+        int calendar_column = this->calendar_column( dt );
+        if( calendar_row < 0 )
+        {
+            //invalid date
+            return;
+        }
+        this->set_vacation( calendar_row, calendar_column );
+    }
+
+    /// ------------------------------------------------------------------------
+    ///	unset_vacation( const QDate &dt )
+    /// ------------------------------------------------------------------------
+    void calendar_data::unset_vacation( const QDate &dt )
+    {
+        int calendar_row = this->calendar_row( dt );
+        int calendar_column = this->calendar_column( dt );
+        if( calendar_row < 0 )
+        {
+            //invalid date
+            return;
+        }
+        this->unset_vacation( calendar_row, calendar_column );
     }
 
 /// ############################################################################

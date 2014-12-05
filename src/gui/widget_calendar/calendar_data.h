@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 18-03-2013
-///		Date update	: 16-04-2013
+///		Date update	: 05-12-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __CALENDAR_DATA_H__
@@ -68,6 +68,12 @@ namespace employee_vacation
         /// --------------------------------------------------------------------
         unsigned int hash_index( const int row, const int column ) const;
         /// --------------------------------------------------------------------
+        unsigned int hash_index( const QDate &dt ) const;
+        /// --------------------------------------------------------------------
+        int calendar_row( const QDate &dt ) const;
+        /// --------------------------------------------------------------------
+        int calendar_column( const QDate &dt ) const;
+        /// --------------------------------------------------------------------
         void clear( );
         /// --------------------------------------------------------------------
         void replace_item( const unsigned index, calendar_item *new_item );
@@ -88,6 +94,12 @@ namespace employee_vacation
         /// --------------------------------------------------------------------
         void
             unset_vacation( const int calendar_row, const int calendar_column );
+        /// --------------------------------------------------------------------
+        void
+            set_vacation( const QDate &dt );
+        /// --------------------------------------------------------------------
+        void
+            unset_vacation( const QDate &dt  );
 
     /// ========================================================================
     ///		PROPERTIES
