@@ -229,9 +229,6 @@ namespace employee_vacation
         int n_calendar_index = dt_begin.month( ) - 1;
         tableview_month_calendar *p_calendar = this->_calendars[n_calendar_index];
         p_calendar->set_vacation( dt_begin, dt_end );
-        p_calendar->repaint( );
-
-        this->repaint( );
     }
 
     /// ------------------------------------------------------------------------
@@ -242,9 +239,6 @@ namespace employee_vacation
         int n_calendar_index = dt_begin.month( ) - 1;
         tableview_month_calendar *p_calendar = this->_calendars[n_calendar_index];
         p_calendar->unset_vacation( dt_begin, dt_end );
-        p_calendar->repaint( );
-
-        this->repaint( );
     }
 
     /// ========================================================================

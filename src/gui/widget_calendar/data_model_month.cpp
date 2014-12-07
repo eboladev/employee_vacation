@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 29-01-2013
-///		Date update	: 05-12-2014
+///		Date update	: 06-12-2014
 ///		Comment		:
 /// ============================================================================
 
@@ -276,7 +276,7 @@ namespace employee_vacation
             while( dt <= dt_end )
             {
                 this->_data->unset_vacation( dt );
-                dt.addDays( 1 );
+                dt = dt.addDays( 1 );
             }
         }
         catch( std::exception &ex )

@@ -209,6 +209,9 @@ namespace employee_vacation
         {
             data_model_month *dmm = static_cast<data_model_month*>( model );
             dmm->set_vacation_days( dt_begin, dt_end );
+            //crutch for repainting
+            this->hide();
+            this->show();
         }
     }
 

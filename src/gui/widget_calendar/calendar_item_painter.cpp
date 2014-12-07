@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 25-03-2013
-///		Date update	: 25-03-2013
+///		Date update	: 08-12-2014
 ///		Comment		:
 /// ============================================================================
 #include <QPainter>
@@ -158,7 +158,7 @@ void calendar_item_painter_vacation::paint(
     else
     {
         //light green
-        QRgb rgb_brush = 0xD4FFE4;
+        QRgb rgb_brush = 0x84FFA4;
         QBrush brush( QColor::fromRgb( rgb_brush ) );
         painter->fillRect( option.rect, brush );
     }
