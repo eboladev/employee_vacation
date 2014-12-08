@@ -2,21 +2,23 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 15-10-2013
-///		Date update	: 02-10-2014
+///		Date update	: 08-12-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __WIDGET_EMPLOYEE_VACATION_H__
 #define __WIDGET_EMPLOYEE_VACATION_H__
 
 #include <QWidget>
+#include <QLabel>
 #include <QPushButton>
+
+#include "data_adapter_employee.h"
 
 namespace rele_auto
 {
 
 namespace employee_vacation
 {
-    class data_employee;
     class widget_year_calendar;
 /// ############################################################################
 ///			class widget_employee_vacation
@@ -48,6 +50,8 @@ namespace employee_vacation
         /// --------------------------------------------------------------------
         void init_connections( );
         /// --------------------------------------------------------------------
+        QWidget* init_label_total( );
+        /// --------------------------------------------------------------------
         QWidget* init_widget_calendar( );
         /// --------------------------------------------------------------------
         QWidget* init_buttons( );
@@ -67,6 +71,21 @@ namespace employee_vacation
         const data_employee* employee( ) const
         {
             return this->_employee;
+        }
+
+        /// --------------------------------------------------------------------
+        /// total_days
+        void total_days( int n_days )
+        {
+            QString s_employee( "" );
+            QString s_text( "" );
+            if( this->_employee )
+            {
+                s_employee = this->_employee->employee( );
+                s_text = "<h2>"  + s_employee + tr( " - total days:" ) +
+                         QString::number( n_days ) + "</h2>";
+            }
+            this->_lbl_total->setText( s_text );
         }
 
     /// ========================================================================
@@ -97,6 +116,7 @@ namespace employee_vacation
     ///		FIELDS
     /// ========================================================================
     private:
+        QLabel                  *_lbl_total;
         widget_year_calendar    *_w_calendar;
         QPushButton             *_btn_save;
         QPushButton             *_btn_clear;

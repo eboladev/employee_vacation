@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 15-10-2013
-///		Date update	: 15-10-2013
+///		Date update	: 08-12-2014
 ///		Comment		:
 /// ============================================================================
 #include <stdexcept>
@@ -107,6 +107,8 @@ namespace employee_vacation
 
         QDate  dt_end( n_year, 12, 31 );
         s_filter += "(dt_end <= \'" + dt_end.toString( "yyyy-MM-dd" ) + "\'))";
+
+        s_filter += " ORDER BY dt_begin";
 
 		return s_filter;
 	}

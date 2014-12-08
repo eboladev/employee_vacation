@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 18-03-2013
-///		Date update	: 05-12-2014
+///		Date update	: 08-12-2014
 ///		Comment		:
 /// ============================================================================
 
@@ -194,13 +194,15 @@ namespace employee_vacation
         {
             return -1;
         }
-        QDate dt_month_start( 1, dt.month( ), dt.year( ) );
+        QDate dt_month_start( dt.year( ), dt.month( ), 1 );
         //date cell number in one-dimension row starting with
         //previous month last week Monday
-        int cell_number = dt.day( ) + dt_month_start.dayOfWeek( ) - 1;
-
+        int cell_number = (dt.day( ) - 1) + (dt_month_start.dayOfWeek( ) - 1);
         //calculate row in calendar table
-        return (cell_number / DAYS_IN_WEEK) + START_DAY_ROW;
+        int n_row = (cell_number / DAYS_IN_WEEK) + START_DAY_ROW;
+        //n_row += (cell_number % DAYS_IN_WEEK) > 0 ? 1 : 0;
+
+        return n_row;
     }
 
     /// ------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 15-10-2013
-///		Date update	: 02-12-2014
+///		Date update	: 08-12-2014
 ///		Comment		:
 /// ============================================================================
 
@@ -13,7 +13,6 @@
 #include "widget_employee_vacation.h"
 #include "widget_year_calendar.h"
 
-#include "data_adapter_employee.h"
 #include "data_adapter_vacation_period.h"
 
 #include "business_logic.h"
@@ -79,6 +78,7 @@ namespace employee_vacation
         vl->setMargin( 0 );
         vl->setSpacing( 0 );
 
+        vl->addWidget( this->init_label_total( ), 20 );
         vl->addWidget( this->init_widget_calendar( ), 1000 );
         vl->addWidget( this->init_buttons( ), 20 );
 
@@ -90,6 +90,15 @@ namespace employee_vacation
     /// ------------------------------------------------------------------------
     void widget_employee_vacation::init_connections( )
     {
+    }
+
+    /// ------------------------------------------------------------------------
+    /// init_label_total( )
+    /// ------------------------------------------------------------------------
+    QWidget *widget_employee_vacation::init_label_total( )
+    {
+        this->_lbl_total = new QLabel;
+        return this->_lbl_total;
     }
 
     /// ------------------------------------------------------------------------
@@ -158,23 +167,19 @@ namespace employee_vacation
     }
 */
     /// ------------------------------------------------------------------------
-    /// slot_set_employee(const data_employee *)
+    /// refresh_calendar( )
     /// ------------------------------------------------------------------------
     void widget_employee_vacation::refresh_calendar( )
     {
         //empty calendar vacation periods
         this->_w_calendar->year_changed( );
+
         //check employee
         if( this->_employee == 0 )
         {
             return;
         }
-        /*
-        QMessageBox::information(
-                                 0, tr("info"),
-                                 this->_employee->to_string( )
-                                );
-                                */
+
         //get vacation periods data
         business_logic &logic = application::program_instance( )->the_business_logic( );
         data_vacation_period_collection *p_coll = 0;
@@ -184,8 +189,12 @@ namespace employee_vacation
                                              );
         if( !p_coll )
         {
+            //set total days text
+            this->total_days( 0 );
             return;
         }
+
+        int n_total_days = 0;
         //paint vacation days
         data_vacation_period_collection::iterator it = p_coll->begin( );
         for( ;it != p_coll->end( ); ++it )
@@ -193,11 +202,18 @@ namespace employee_vacation
             data_vacation_period *period = *it;
             if( period )
             {
-                this->_w_calendar->set_vacation( period->date_begin( ), period->date_end( ) );
+                QDate dt_begin = period->date_begin( );
+                QDate dt_end = period->date_end( );
+                this->_w_calendar->set_vacation( dt_begin, dt_end );
+
+                //+1 includes begining period date
+                n_total_days += dt_begin.daysTo( dt_end ) + 1;
             }
         }
         //remove collection pointer
         delete p_coll;
+        //set total days text
+        this->total_days( n_total_days );
     }
     /// ========================================================================
     ///		EVENTS

@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 29-01-2013
-///		Date update	: 05-12-2014
+///		Date update	: 08-12-2014
 ///		Comment		:
 /// ============================================================================
 
@@ -210,8 +210,8 @@ namespace employee_vacation
             data_model_month *dmm = static_cast<data_model_month*>( model );
             dmm->set_vacation_days( dt_begin, dt_end );
             //crutch for repainting
-            this->hide();
-            this->show();
+            this->hide( );
+            this->show( );
         }
     }
 
@@ -225,6 +225,9 @@ namespace employee_vacation
         {
             data_model_month *dmm = static_cast<data_model_month*>( model );
             dmm->unset_vacation_days( dt_begin, dt_end );
+            //crutch for repainting
+            this->hide( );
+            this->show( );
         }
     }
 
