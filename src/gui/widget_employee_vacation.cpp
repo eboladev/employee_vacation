@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 15-10-2013
-///		Date update	: 08-12-2014
+///		Date update	: 09-12-2014
 ///		Comment		:
 /// ============================================================================
 
@@ -90,6 +90,10 @@ namespace employee_vacation
     /// ------------------------------------------------------------------------
     void widget_employee_vacation::init_connections( )
     {
+        this->connect(
+                        this->_btn_save, SIGNAL( clicked( ) ),
+                        this, SLOT( slot_insert_vacation_periods( ) )
+                     );
     }
 
     /// ------------------------------------------------------------------------
@@ -229,6 +233,19 @@ namespace employee_vacation
     {
         this->_employee = const_cast<data_employee *>( employee );
         this->refresh_calendar( );
+    }
+
+    /// ------------------------------------------------------------------------
+    /// slot_insert_vacation_periods( )
+    /// ------------------------------------------------------------------------
+    void widget_employee_vacation::slot_insert_vacation_periods( )
+    {
+        if( !this->_employee )
+        {
+            return;
+        }
+        //get selected periods
+        //save periods
     }
 
 /// ############################################################################
