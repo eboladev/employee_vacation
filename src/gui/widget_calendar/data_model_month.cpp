@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 29-01-2013
-///		Date update	: 08-12-2014
+///		Date update	: 10-12-2014
 ///		Comment		:
 /// ============================================================================
 
@@ -172,7 +172,7 @@ namespace employee_vacation
             return Qt::NoItemFlags;
         }
 
-        if( ci->type() == day )
+        if( ci->type() == calendar_item::day )
         {
             return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
         }

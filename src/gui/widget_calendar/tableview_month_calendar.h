@@ -3,7 +3,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 29-01-2013
-///		Date update	: 05-12-2014
+///		Date update	: 10-12-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __EV_TABLEVIEW_MONTH_CALENDAR_H__
@@ -39,14 +39,6 @@ namespace employee_vacation
         virtual ~tableview_month_calendar( );
 
     /// ========================================================================
-    ///		PROPERTIES
-    /// ========================================================================
-    public:
-        const eu::date_period_collection& periods( ) const
-        {
-            return this->_periods;
-        }
-    /// ========================================================================
     ///		FUNCTIONS
     /// ========================================================================
     private:
@@ -54,6 +46,7 @@ namespace employee_vacation
         void initialize( );
         void init_layout( );
         void init_signal_connections( );
+        void make_periods( );
         int  min_column_width( ) const;
         int  min_row_height( ) const;
         int  correct_columns_width( );
@@ -99,6 +92,14 @@ namespace employee_vacation
             this->_model->month( MM );
         }
 
+    /// ------------------------------------------------------------------------
+    /// selected_periods
+        eu::date_period_collection& selected_periods( )
+        {
+            this->make_periods( );
+            return this->_periods;
+        }
+
     /// ========================================================================
     ///		OPERATORS
     /// ========================================================================
@@ -110,7 +111,6 @@ namespace employee_vacation
     /// ========================================================================
     private slots:
         void show_context_menu( const QPoint & pos );
-        void periods_changed( );
         void set_vacation( );
         void unset_vacation( );
 

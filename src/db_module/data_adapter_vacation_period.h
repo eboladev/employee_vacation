@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 15-10-2013
-///		Date update	: 05-12-2014
+///		Date update	: 10-12-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __DATA_ADAPTER_VACATION_PERIOD_H__
@@ -45,6 +45,14 @@ namespace employee_vacation
             _i_employee( 0 ),
             _x_dt_begin( "" ),
             _x_dt_end( "" )
+        { }
+
+    /// ------------------------------------------------------------------------
+		explicit
+        data_vacation_period( int id, const QDate &dt_begin, const QDate &dt_end ) :
+            _i_employee( id ),
+            _x_dt_begin( dt_begin.toString( "yyyy-MM-dd" ) ),
+            _x_dt_end( dt_end.toString( "yyyy-MM-dd" ) )
         { }
 
     /// ------------------------------------------------------------------------
@@ -340,6 +348,9 @@ namespace employee_vacation
         data_vacation_period_collection*
                         select( const int id_employee, int n_year ) const;
     /// ------------------------------------------------------------------------
+        data_vacation_period*
+                        select_last( const int id_employee, int n_year ) const;
+    /// ------------------------------------------------------------------------
         void insert( const data_vacation_period &e ) const;
     /// ------------------------------------------------------------------------
         void del( const data_vacation_period &e ) const;
@@ -364,6 +375,7 @@ namespace employee_vacation
 		static const QString _s_sql_insert;
 		static const QString _s_sql_delete;
 		static const QString _s_sql_select;
+		static const QString _s_sql_select_last;
 
         espira::db::qt_sqlite_connection *_dbms;
 

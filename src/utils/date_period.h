@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 23-10-2013
-///		Date update	: 23-10-2013
+///		Date update	: 10-12-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __DATE_PERIOD_H__
@@ -99,8 +99,16 @@ namespace utils
 
             return *this;
         }
-
-	public:
+        /// --------------------------------------------------------------------
+        QString to_string( )
+        {
+            if( !this->_dt_begin.isValid( ) || !this->_dt_end.isValid( ) )
+            {
+                return QString( "" );
+            }
+            return this->_dt_begin.toString( "yyyy-MM-dd" ) + " / " +
+                   this->_dt_end.toString( "yyyy-MM-dd" );
+        }
 
     /// ========================================================================
     ///			FIELDS
@@ -119,10 +127,13 @@ namespace utils
 
     class date_period_collection
 	{
+	public:
         typedef QList<date_period *>::iterator iterator;
+        typedef QList<date_period *>::const_iterator const_iterator;
 	/// ========================================================================
 	///		CONSTRUCTORS/DESTRUCTOR
 	/// ========================================================================
+    private:
         /// --------------------------------------------------------------------
         date_period_collection( const date_period_collection &rhs );
 	public:
@@ -166,6 +177,17 @@ namespace utils
         }
 
         /// --------------------------------------------------------------------
+        /// const_begin( )
+        const_iterator const_begin( ) const
+        {
+            if( !this->_data )
+            {
+                return 0;
+            }
+            return this->_data->constBegin( );
+        }
+
+        /// --------------------------------------------------------------------
         /// end( )
         iterator end( )
         {
@@ -176,6 +198,16 @@ namespace utils
             return this->_data->end( );
         }
 
+        /// --------------------------------------------------------------------
+        /// const_end( )
+        const_iterator const_end( ) const
+        {
+            if( !this->_data )
+            {
+                return 0;
+            }
+            return this->_data->constEnd( );
+        }
 
 	/// ========================================================================
 	///		FUNCTIONS

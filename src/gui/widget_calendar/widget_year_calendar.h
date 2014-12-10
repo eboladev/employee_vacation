@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 17-04-2013
-///		Date update	: 07-12-2014
+///		Date update	: 10-12-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __WIDGET_YEAR_CALENDAR_H__
@@ -53,7 +53,7 @@ typedef QVector<tableview_month_calendar*> vector_calendars;
             calendar( calendar_data::month_type month )
         {
             int n_month = month;
-            if( this->_calendars.size( ) <= n_month )
+            if( this->_calendars.size( ) < n_month )
             {
                 return 0;
             }

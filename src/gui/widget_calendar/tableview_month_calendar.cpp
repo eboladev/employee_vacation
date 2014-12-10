@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 29-01-2013
-///		Date update	: 08-12-2014
+///		Date update	: 10-12-2014
 ///		Comment		:
 /// ============================================================================
 
@@ -10,6 +10,7 @@
 #include <QMenu>
 #include <QMessageBox>
 
+#include <QDate>
 #include <QPaintEngine>
 #include <QPaintDevice>
 #include <QPainter>
@@ -111,14 +112,69 @@ namespace employee_vacation
     /// ------------------------------------------------------------------------
     void tableview_month_calendar::init_signal_connections( )
     {
-        if( this->selectionModel( ) )
+    }
+
+    /// ------------------------------------------------------------------------
+    /// make_periods( )
+    /// ------------------------------------------------------------------------
+    void tableview_month_calendar::make_periods( )
+    {
+        if( !this->model( ) )
         {
-            this->connect(
-                            this->selectionModel( ),
-                            SIGNAL( selectionChanged( QItemSelection, QItemSelection ) ),
-                            this,
-                            SLOT( periods_changed( ) )
-                         );
+            return;
+        }
+        //clear periods
+        this->_periods.free( );
+        //save selected periods into collection
+        QItemSelectionModel *mod_sel = this->selectionModel( );
+        if( !mod_sel || !mod_sel->selectedIndexes( ).size( ) )
+        {
+            return;
+        }
+
+        QModelIndexList list = mod_sel->selectedIndexes( );
+        QModelIndexList::iterator it = list.begin( );
+        int n_day_prev = -1;
+        eu::date_period *period = 0;
+
+        for( ; it != list.end( ); ++it )
+        {
+            QModelIndex &idx = *it;
+            if( !idx.isValid( ) )
+            {
+                continue;
+            }
+            QVariant val = this->model( )->data( idx );
+            if( !val.isValid( ) )
+            {
+                continue;
+            }
+
+            int n_day_cur = val.toInt( );
+            QDate dt( this->year( ), this->month( ), n_day_cur );
+            if( n_day_cur != n_day_prev + 1 )
+            {
+                //if period brakes
+                if( period )
+                {
+                    //append period to coll
+                    this->_periods.append( *period );
+                    period = 0;
+                }
+                //start new period
+                period = new eu::date_period( dt, dt );
+            }
+            else
+            {
+                //if period is continous
+                period->date_end( dt );
+            }
+            n_day_prev = n_day_cur;
+        }
+        //appends last period
+        if( period )
+        {
+            this->_periods.append( *period );
         }
     }
 
@@ -252,14 +308,6 @@ namespace employee_vacation
     void tableview_month_calendar::show_context_menu( const QPoint &pos )
     {
         // this->_menu_context->popup( this->mapToGlobal(pos) );
-    }
-
-    /// ------------------------------------------------------------------------
-    /// periods_changed( )
-    /// ------------------------------------------------------------------------
-    void tableview_month_calendar::periods_changed( )
-    {
-        //save selected periods into collection
     }
 
     /// ------------------------------------------------------------------------

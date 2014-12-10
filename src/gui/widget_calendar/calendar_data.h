@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 18-03-2013
-///		Date update	: 05-12-2014
+///		Date update	: 10-12-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __CALENDAR_DATA_H__
@@ -24,7 +24,7 @@ namespace employee_vacation
     class calendar_data
 	{
     public:
-        enum month_type
+        enum month_type : int
         {
             Jan = 1,
             Feb = 2,

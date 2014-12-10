@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 15-10-2013
-///		Date update	: 08-12-2014
+///		Date update	: 10-12-2014
 ///		Comment		:
 /// ============================================================================
 #include <stdexcept>
@@ -40,6 +40,15 @@ namespace employee_vacation
 	const QString data_adapter_vacation_period::_s_sql_select(
                                 "SELECT i_employee, dt_begin, dt_end "
                                        "FROM t_employee_vacation_period "
+                                                    );
+
+	const QString data_adapter_vacation_period::_s_sql_select_last(
+                                "SELECT i_employee, dt_begin, dt_end "
+                                    "FROM t_employee_vacation_period "
+                                        "WHERE ((i_employee=:i_employee)AND"
+                                            "(date(dt_begin)>date(:dt_begin,'start of year'))AND"
+                                            "(date(dt_begin)<date(:dt_begin,'start of year','+1 year'))) "
+                                    "ORDER BY dt_begin DESC LIMIT 1;"
                                                     );
 
 /// ############################################################################
@@ -89,7 +98,7 @@ namespace employee_vacation
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_int( r.id_employee( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.text_date_begin( ) ) );
         pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( r.text_date_end( ) ) );
-	}
+    }
 
     /// ------------------------------------------------------------------------
 	///	make_filter( const int id_employee ) const
@@ -202,6 +211,67 @@ namespace employee_vacation
 
         return emp_coll;
 	}
+
+    data_vacation_period* data_adapter_vacation_period::select_last(const int id_employee, int n_year) const
+    {
+        QString s_dt_start_year = QDate( n_year, 1, 1 ).toString( "yyyy-MM-dd" );
+		//run query
+        espira::db::qt_sqlite_connection cnn;
+        espira::db::qt_sqlite_command *pcmd = 0;
+        data_vacation_period *period = 0;
+        try
+        {
+            using namespace espira::db;
+            const QString &db_path = application::the_business_logic( ).db_path( );
+            cnn.db_path( db_path );
+            //cnn open
+            cnn.open( );
+            //create command
+            pcmd = cnn.create_command( data_adapter_vacation_period::_s_sql_select_last );
+            pcmd->parameters( ).append( new qt_sqlite_dbvalue_int( id_employee ) );
+            pcmd->parameters( ).append( new qt_sqlite_dbvalue_text( s_dt_start_year ) );
+            //open cmd
+            pcmd->open( );
+            //exec
+            pcmd->execute( );
+            //close command
+            pcmd->close( );
+            //cnn close
+            cnn.close( );
+
+            //output result
+            espira::db::qt_data_row_collection &rows = pcmd->result( );
+            if( rows.size( ) )
+            {
+                period = new data_vacation_period;
+                espira::db::qt_data_row_collection::iterator iter = rows.begin( );
+                period = new data_vacation_period( *iter );
+            }
+
+            //free memory
+            delete pcmd;
+        }
+        catch( std::exception &ex )
+        {
+            if( pcmd )
+            {
+                pcmd->close( );
+                pcmd = 0;
+            }
+            if( period )
+            {
+                delete period;
+            }
+            cnn.close( );
+
+            QString s_err( QString::fromStdString( ex.what( ) ) );
+            qDebug( ) << s_err;
+
+            this->throw_error( s_err.toStdString( ).c_str( ) );
+        }
+
+        return period;
+    }
 
 	/// ------------------------------------------------------------------------
 	///	insert( const data_vacation_period &vp ) const

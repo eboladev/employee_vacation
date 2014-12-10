@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 18-03-2013
-///		Date update	: 08-12-2014
+///		Date update	: 10-12-2014
 ///		Comment		:
 /// ============================================================================
 #ifndef __CALENDAR_ITEM_H__
@@ -18,22 +18,22 @@ namespace rele_auto
 
 namespace employee_vacation
 {
-    enum calendar_item_type
-    {
-        nothing,
-        header_month,
-        header_day,
-        day,
-        holiday_day,
-        vacation_day
-    };
-
 /// ############################################################################
 ///			class calendar_item
 /// ############################################################################
     class calendar_item
 	{
     public:
+        enum calendar_item_type
+        {
+            nothing,
+            header_month,
+            header_day,
+            day,
+            holiday_day,
+            vacation_day
+        };
+
     /// ========================================================================
     ///		CONSTRUCTORS/DESTRUCTOR
     /// ========================================================================

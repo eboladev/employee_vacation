@@ -106,6 +106,7 @@ namespace employee_vacation
     private slots:
         /// --------------------------------------------------------------------
         void slot_insert_vacation_periods( );
+        void slot_delete_vacation_period( );
 
     public slots:
         /// --------------------------------------------------------------------

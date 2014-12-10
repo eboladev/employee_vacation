@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 29-01-2013
-///		Date update	: 05-12-2014
+///		Date update	: 10-12-2014
 ///		Comment		:
 /// ============================================================================
 
@@ -51,7 +51,7 @@ namespace employee_vacation
     /// ------------------------------------------------------------------------
     /// month
         int month( ) const
-        { return this->_year; }
+        { return this->_month; }
 
         void month( const int MM )
         { this->_month = MM; }

@@ -2,7 +2,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 15-10-2013
-///		Date update	: 09-12-2014
+///		Date update	: 10-12-2014
 ///		Comment		:
 /// ============================================================================
 
@@ -12,8 +12,10 @@
 
 #include "widget_employee_vacation.h"
 #include "widget_year_calendar.h"
+#include "tableview_month_calendar.h"
 
 #include "data_adapter_vacation_period.h"
+#include "date_period.h"
 
 #include "business_logic.h"
 #include "application.h"
@@ -93,6 +95,10 @@ namespace employee_vacation
         this->connect(
                         this->_btn_save, SIGNAL( clicked( ) ),
                         this, SLOT( slot_insert_vacation_periods( ) )
+                     );
+        this->connect(
+                        this->_btn_clear, SIGNAL( clicked( ) ),
+                        this, SLOT( slot_delete_vacation_period( ) )
                      );
     }
 
@@ -244,9 +250,92 @@ namespace employee_vacation
         {
             return;
         }
-        //get selected periods
-        //save periods
+        business_logic &logic =
+                         application::program_instance()->the_business_logic( );
+
+        QString s_periods( "" );
+        //for each month
+        for( int i = 1; i <=12; ++i )
+        {
+            //get next selected periods
+            const eu::date_period_collection &periods =
+                this->_w_calendar->calendar( (calendar_data::month_type)i )->selected_periods( );
+            //save periods
+            eu::date_period_collection::const_iterator it = periods.const_begin( );
+            if( it == 0 )
+            {
+                continue;
+            }
+            bool b_err = false;
+            for( ;it != periods.const_end( ); ++it )
+            {
+                eu::date_period *p = *it;
+                if( p )
+                {
+                    //save period
+                    s_periods.append( p->to_string( ) + "\n" );
+                    data_vacation_period vp(
+                                            this->_employee->id_employee( ),
+                                            p->date_begin( ),
+                                            p->date_end( )
+                                           );
+                    if( !logic.vacation_period_insert( vp ) )
+                    {
+                        b_err = true;
+                        break;
+                    }
+                }
+            }
+            if( b_err )
+            {
+                break;
+            }
+        }
+        QMessageBox::information( 0, tr( "saved periods" ), s_periods );
+        //repainting
+        this->refresh_calendar( );
     }
+
+    /// ------------------------------------------------------------------------
+    /// slot_delete_vacation_period( )
+    /// ------------------------------------------------------------------------
+    void widget_employee_vacation::slot_delete_vacation_period( )
+    {
+        if( !this->_employee )
+        {
+            return;
+        }
+        //select vacation period data will be delete
+        business_logic &logic = application::program_instance( )->the_business_logic( );
+        data_vacation_period *p = logic.vacation_period_select_last(
+                                                                    this->_employee->id_employee( ),
+                                                                    this->_w_calendar->year( )
+                                                                   );
+        if( !p )
+        {
+            //nothing to delete
+            return;
+        }
+        int result = QMessageBox::question(
+                             0,
+                             tr( "user approve need" ),
+                             tr( "are you sure to delete last vacation period\n" )+
+                             this->_employee->employee( ) + "\n" +
+                             p->to_string( ),
+                             QMessageBox::No, QMessageBox::Yes
+                                          );
+        if( result != QMessageBox::Yes )
+        {
+            delete p;
+            return;
+        }
+        //deleting
+        logic.vacation_period_delete( *p );
+        delete p;
+
+         //repainting
+        this->refresh_calendar( );
+   }
 
 /// ############################################################################
 
