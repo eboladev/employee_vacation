@@ -1,7 +1,7 @@
 /// ============================================================================
 ///		Author		: M. Ivanchenko
 ///		Date create	: 10-10-2013
-///		Date update	: 06-11-2013
+///		Date update	: 10-12-2014
 ///		Comment		:
 /// ============================================================================
 #include <QDebug>
@@ -100,6 +100,7 @@ namespace employee_vacation
             this->load_config( );
             this->init_db( );
             this->init_logic( );
+            this->set_font( );
 
             this->connect(
                          this, SIGNAL(aboutToQuit( )),
@@ -143,7 +144,7 @@ namespace employee_vacation
 
 			//init logic dynamic memory allocated objects
 			the_business_logic( ).init( );
-		}
+        }
     }
 
     /// ------------------------------------------------------------------------
@@ -226,6 +227,23 @@ namespace employee_vacation
     {
         this->find_db_file( );
         application::the_business_logic( ).db_path( this->_params.parameter("db_path") );
+    }
+
+    /// ------------------------------------------------------------------------
+	///	set_font( )
+    /// ------------------------------------------------------------------------
+    void application::set_font()
+    {
+        if( this->_params.parameter("font").length( ) )
+        {
+            QFont fnt( this->_params.parameter( "font" ) );
+            if( this->_params.parameter("font-size").length( ) )
+            {
+                fnt.setPixelSize( this->_params.parameter("font-size").toInt( ) );
+            }
+            this->setFont( fnt );
+            this->setFont( fnt, "QWidget" );
+        }
     }
 
     /// ========================================================================

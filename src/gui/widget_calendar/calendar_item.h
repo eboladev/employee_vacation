@@ -21,8 +21,9 @@ namespace employee_vacation
 /// ############################################################################
 ///			class calendar_item
 /// ############################################################################
-    class calendar_item
+    class calendar_item : public QObject
 	{
+	Q_OBJECT
     public:
         enum calendar_item_type
         {
@@ -112,6 +113,7 @@ namespace employee_vacation
 
     class calendar_item_nothing : public calendar_item
     {
+    Q_OBJECT
     /// ========================================================================
     ///		CONSTRUCTORS/DESTRUCTOR
     /// ========================================================================
@@ -163,6 +165,7 @@ namespace employee_vacation
 
     class calendar_item_day : public calendar_item
     {
+    Q_OBJECT
     /// ========================================================================
     ///		CONSTRUCTORS/DESTRUCTOR
     /// ========================================================================
@@ -220,6 +223,7 @@ namespace employee_vacation
 
     class calendar_item_holiday : public calendar_item
     {
+    Q_OBJECT
     /// ========================================================================
     ///		CONSTRUCTORS/DESTRUCTOR
     /// ========================================================================
@@ -277,6 +281,7 @@ namespace employee_vacation
 
     class calendar_item_vacation : public calendar_item
     {
+    Q_OBJECT
     /// ========================================================================
     ///		CONSTRUCTORS/DESTRUCTOR
     /// ========================================================================
@@ -333,6 +338,7 @@ namespace employee_vacation
 
     class calendar_item_header_month : public calendar_item
     {
+    Q_OBJECT
     /// ========================================================================
     ///		CONSTRUCTORS/DESTRUCTOR
     /// ========================================================================
@@ -398,6 +404,7 @@ namespace employee_vacation
 
     class calendar_item_header_day : public calendar_item
     {
+    Q_OBJECT
     /// ========================================================================
     ///		CONSTRUCTORS/DESTRUCTOR
     /// ========================================================================
@@ -458,6 +465,7 @@ namespace employee_vacation
 /// ############################################################################
     class calendar_item_creator
     {
+    Q_OBJECT
     /// ========================================================================
     ///		CONSTRUCTORS/DESTRUCTOR
     /// ========================================================================
