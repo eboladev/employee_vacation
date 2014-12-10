@@ -16,21 +16,33 @@ namespace employee_vacation
 /// ############################################################################
 ///			class calendar_item_header_month
 /// ############################################################################
-    QString calendar_item_header_month::_month_long_names[]
+    bool calendar_item_header_month::_is_initialized = false;
+
+    QVector<QString>& calendar_item_header_month::month_long_names( )
     {
-        QObject::tr( "January" ),
-        QObject::tr( "February" ),
-        QObject::tr( "March" ),
-        QObject::tr( "April" ),
-        QObject::tr( "May" ),
-        QObject::tr( "June" ),
-        QObject::tr( "July" ),
-        QObject::tr( "August" ),
-        QObject::tr( "September" ),
-        QObject::tr( "October" ),
-        QObject::tr( "November" ),
-        QObject::tr( "December" )
-    };
+        static QVector<QString> names;
+        if( calendar_item_header_month::_is_initialized )
+        {
+            return names;
+        }
+        names.append( QObject::tr( "January" ) );
+        names.append( QObject::tr( "February" ) );
+        names.append( QObject::tr( "March" ) );
+        names.append( QObject::tr( "April" ) );
+        names.append( QObject::tr( "May" ) );
+        names.append( QObject::tr( "June" ) );
+        names.append( QObject::tr( "July" ) );
+        names.append( QObject::tr( "August" ) );
+        names.append( QObject::tr( "September" ) );
+        names.append( QObject::tr( "October" ) );
+        names.append( QObject::tr( "November" ) );
+        names.append( QObject::tr( "December" ) );
+
+        calendar_item_header_month::_is_initialized = true;
+
+        return names;
+    }
+
     /// ------------------------------------------------------------------------
     /// const QString& text( ) const
     /// ------------------------------------------------------------------------
@@ -41,22 +53,33 @@ namespace employee_vacation
             return "";
         }
 
-        return calendar_item_header_month::_month_long_names[this->date( ).month( ) - 1];
+        return calendar_item_header_month::month_long_names( )[this->date( ).month( ) - 1];
     }
 
 /// ############################################################################
 ///			class calendar_item_header_day
 /// ############################################################################
-    QString calendar_item_header_day::_day_short_names[]
+    bool calendar_item_header_day::_is_initialized = false;
+
+    QVector<QString>& calendar_item_header_day::day_short_names( )
     {
-        QObject::tr("Mon"),
-        QObject::tr("Tue"),
-        QObject::tr("Wed"),
-        QObject::tr("Thu"),
-        QObject::tr("Fri"),
-        QObject::tr("Sat"),
-        QObject::tr("Sun")
-    };
+        static QVector<QString> names;
+        if( calendar_item_header_day::_is_initialized )
+        {
+            return names;
+        }
+        names.append( QObject::tr("Mon") );
+        names.append( QObject::tr("Tue") );
+        names.append( QObject::tr("Wed") );
+        names.append( QObject::tr("Thu") );
+        names.append( QObject::tr("Fri") );
+        names.append( QObject::tr("Sat") );
+        names.append( QObject::tr("Sun") );
+
+        calendar_item_header_month::_is_initialized = true;
+
+        return names;
+    }
 
     /// ------------------------------------------------------------------------
     /// const QString& text( ) const
@@ -68,7 +91,7 @@ namespace employee_vacation
             return "";
         }
 
-        return calendar_item_header_day::_day_short_names[this->date( ).dayOfWeek( ) - 1];
+        return calendar_item_header_day::day_short_names( )[this->date( ).dayOfWeek( ) - 1];
     }
 
 /// ############################################################################

@@ -3,4 +3,5 @@
 *.user.*
 *.lng
 *.qm
+.directory
 
