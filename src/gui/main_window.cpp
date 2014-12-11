@@ -60,7 +60,7 @@ namespace employee_vacation
 	{
         this->setWindowTitle( tr("app_employee_vacation") );
 
-        this->setMinimumSize( 1025, 820 );
+        this->setMinimumSize( 1024, 768 );
 		this->window_center( );
 		//_workspace
         this->_workspace = new widget_central( this );

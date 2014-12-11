@@ -94,5 +94,6 @@ LIBS += /usr/lib64/libsqlite3.so
 win32: {
 INCLUDEPATH += J:/Qt/sqlite
 LIBS += J:/Qt/sqlite/sqlite3.dll
+RC_FILE += res/winres/app_icon.rc
 }
 
